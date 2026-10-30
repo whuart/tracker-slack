@@ -501,7 +501,7 @@ func handleCreateDeploymentModal(w http.ResponseWriter, i slack.InteractionCallb
 
 	blocks := blockDeploymentMessage(tracker)
 
-	channelID, slackTimestamp, err := api.PostMessage(os.Getenv("TRACKER_DEPLOYMENT_CHANNEL"),
+	channelID, slackTimestamp, err := api.PostMessage(resolveChannel("DEPLOYMENT", tracker.Environment),
 		slack.MsgOptionBlocks(blocks...),
 	)
 	if err != nil {
@@ -525,7 +525,7 @@ func handleCreateDriftModal(w http.ResponseWriter, i slack.InteractionCallback) 
 
 	blocks := blockDriftMessage(tracker)
 
-	channelID, slackTimestamp, err := api.PostMessage(os.Getenv("TRACKER_DRIFT_CHANNEL"),
+	channelID, slackTimestamp, err := api.PostMessage(resolveChannel("DRIFT", tracker.Environment),
 		slack.MsgOptionBlocks(blocks...),
 	)
 	if err != nil {
@@ -550,7 +550,7 @@ func handleCreateIncidentModal(w http.ResponseWriter, i slack.InteractionCallbac
 
 	blocks := blockIncidentMessage(tracker)
 
-	channelID, slackTimestamp, err := api.PostMessage(os.Getenv("TRACKER_INCIDENT_CHANNEL"),
+	channelID, slackTimestamp, err := api.PostMessage(resolveChannel("INCIDENT", tracker.Environment),
 		slack.MsgOptionBlocks(blocks...),
 	)
 	if err != nil {
@@ -575,7 +575,7 @@ func handleCreateRPAUsageModal(w http.ResponseWriter, i slack.InteractionCallbac
 
 	blocks := blockRPAUsageMessage(tracker)
 
-	channelID, slackTimestamp, err := api.PostMessage(os.Getenv("TRACKER_RPA_USAGE_CHANNEL"),
+	channelID, slackTimestamp, err := api.PostMessage(resolveChannel("RPA_USAGE", tracker.Environment),
 		slack.MsgOptionBlocks(blocks...),
 	)
 	if err != nil {
@@ -606,7 +606,7 @@ func handleCreateOperationModal(w http.ResponseWriter, i slack.InteractionCallba
 
 	blocks := blockOperationMessage(tracker)
 
-	channelID, slackTimestamp, err := api.PostMessage(os.Getenv("TRACKER_OPERATION_CHANNEL"),
+	channelID, slackTimestamp, err := api.PostMessage(resolveChannel("OPERATION", tracker.Environment),
 		slack.MsgOptionBlocks(blocks...),
 	)
 	if err != nil {

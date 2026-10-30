@@ -395,19 +395,19 @@ func syncEventToSlack(api *slack.Client, event EventToSync) error {
 
 	switch eventType {
 	case 1: // Deployment
-		channelID = os.Getenv("TRACKER_DEPLOYMENT_CHANNEL")
+		channelID = resolveChannel("DEPLOYMENT", tracker.Environment)
 		blocks = blockDeploymentMessage(tracker)
 	case 2: // Operation
-		channelID = os.Getenv("TRACKER_OPERATION_CHANNEL")
+		channelID = resolveChannel("OPERATION", tracker.Environment)
 		blocks = blockOperationMessage(tracker)
 	case 3: // Drift
-		channelID = os.Getenv("TRACKER_DRIFT_CHANNEL")
+		channelID = resolveChannel("DRIFT", tracker.Environment)
 		blocks = blockDriftMessage(tracker)
 	case 4: // Incident
-		channelID = os.Getenv("TRACKER_INCIDENT_CHANNEL")
+		channelID = resolveChannel("INCIDENT", tracker.Environment)
 		blocks = blockIncidentMessage(tracker)
 	case 5: // RPA Usage
-		channelID = os.Getenv("TRACKER_RPA_USAGE_CHANNEL")
+		channelID = resolveChannel("RPA_USAGE", tracker.Environment)
 		blocks = blockRPAUsageMessage(tracker)
 	default:
 		return fmt.Errorf("unknown event type: %d", eventType)

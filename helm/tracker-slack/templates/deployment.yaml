@@ -60,6 +60,14 @@ spec:
               value: {{ .Values.env.tracker.channel_operation | quote }}
             - name: TRACKER_RPA_USAGE_CHANNEL
               value: {{ .Values.env.tracker.channel_rpa_usage | quote }}
+            {{- range $type, $channels := .Values.env.tracker.channels_by_env }}
+            {{- range $env, $channel := $channels }}
+            {{- if $channel }}
+            - name: {{ printf "TRACKER_%s_CHANNEL_%s" ($type | upper) ($env | upper) }}
+              value: {{ $channel | quote }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
             - name: TRACKER_HOST
               value: {{ .Values.env.tracker.host | quote }}
             - name: TRACKER_SLACK_CRON_MESSAGE

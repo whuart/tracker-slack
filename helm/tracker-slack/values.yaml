@@ -12,6 +12,19 @@ env:
     channel_incident: tracker-channel
     channel_operation: tracker-channel
     channel_rpa_usage: tracker-channel
+    # Optional per-environment channels (PROD, PREP, UAT, DEV).
+    # When unset or empty, the channel_<type> value above is used.
+    # Rendered as TRACKER_<TYPE>_CHANNEL_<ENV>, e.g. TRACKER_DEPLOYMENT_CHANNEL_PROD.
+    channels_by_env:
+      deployment: {}
+      #  PROD: tracker-prod
+      #  PREP: tracker-prep
+      #  UAT: tracker-uat
+      #  DEV: tracker-dev
+      drift: {}
+      incident: {}
+      operation: {}
+      rpa_usage: {}
     slack_workspace: "workspace-name"
     cron_message: "5 7 * * *"
 

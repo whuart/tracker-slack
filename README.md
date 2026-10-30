@@ -206,6 +206,9 @@ go run main.go
 | `TRACKER_DEPLOYMENT_CHANNEL` | Canal Slack pour les déploiements | `deployments` | ✅ |
 | `TRACKER_INCIDENT_CHANNEL` | Canal Slack pour les incidents | `incidents` | ✅ |
 | `TRACKER_DRIFT_CHANNEL` | Canal Slack pour les alertes de dérive | `drift-alerts` | ✅ |
+| `TRACKER_OPERATION_CHANNEL` | Canal Slack pour les opérations | - | ❌ |
+| `TRACKER_RPA_USAGE_CHANNEL` | Canal Slack pour les usages RPA | - | ❌ |
+| `TRACKER_<TYPE>_CHANNEL_<ENV>` | Canal Slack spécifique à un environnement. `<TYPE>` : `DEPLOYMENT`, `OPERATION`, `INCIDENT`, `DRIFT`, `RPA_USAGE` ; `<ENV>` : `PROD`, `PREP`, `UAT`, `DEV`. Si non défini ou vide, `TRACKER_<TYPE>_CHANNEL` est utilisé | - | ❌ |
 | `TRACKER_SLACK_WORKSPACE` | Nom du workspace Slack | - | ✅ |
 | `TRACKER_TIMEZONE` | Fuseau horaire pour l'affichage des dates | `UTC` | ❌ |
 | `TRACKER_SLACK_CRON_MESSAGE` | Planification cron pour les résumés quotidiens | `0 8 * * *` | ❌ |
@@ -220,6 +223,29 @@ Créez des canaux dédiés pour différents types d'événements :
 #incidents       - Rapports d'incidents et suivi
 #drift-alerts    - Notifications de dérive de configuration
 #general         - Résumés quotidiens (optionnel)
+```
+
+#### Routage par environnement
+
+Les messages peuvent être publiés dans un canal différent selon l'environnement choisi
+(`PROD`, `PREP`, `UAT`, `DEV`) :
+
+```bash
+export TRACKER_DEPLOYMENT_CHANNEL="deployments"            # canal par défaut
+export TRACKER_DEPLOYMENT_CHANNEL_PROD="deployments-prod"  # déploiements PROD
+export TRACKER_DEPLOYMENT_CHANNEL_DEV="deployments-dev"    # déploiements DEV
+# PREP et UAT utilisent "deployments"
+```
+
+Avec Helm, utilisez `env.tracker.channels_by_env` :
+
+```yaml
+env:
+  tracker:
+    channels_by_env:
+      deployment:
+        PROD: deployments-prod
+        DEV: deployments-dev
 ```
 
 ### Exemples de Planification Cron
